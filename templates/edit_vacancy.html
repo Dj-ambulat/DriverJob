@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Редактирование вакансии — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1 class="mb-4">Редактировать вакансию</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div>
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="post" class="row g-3">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="col-md-6">
+      <label for="title" class="form-label">Название вакансии</label>
+      <input type="text" id="title" name="title" value="{{ vacancy.title }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="city" class="form-label">Город</label>
+      <input type="text" id="city" name="city" value="{{ vacancy.city }}" class="form-control" required>
+    </div>
+
+    <div class="col-md-6">
+      <label for="category" class="form-label">Категория</label>
+      <select id="category" name="category" class="form-select" required>
+        <option value="" disabled {% if not vacancy.category %}selected{% endif %}>Выберите категорию</option>
+        <option value="driver" {% if vacancy.category == 'driver' %}selected{% endif %}>Водитель</option>
+        <option value="logistics" {% if vacancy.category == 'logistics' %}selected{% endif %}>Логистика</option>
+        <option value="service" {% if vacancy.category == 'service' %}selected{% endif %}>Обслуживание</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      <label for="direction" class="form-label">Направление</label>
+      <select id="direction" name="direction" class="form-select" required>
+        <option value="">Выберите направление</option>
+        <option value="Грузовые перевозки" {% if vacancy.direction == 'Грузовые перевозки' %}selected{% endif %}>Грузовые перевозки</option>
+        <option value="Пассажирские перевозки" {% if vacancy.direction == 'Пассажирские перевозки' %}selected{% endif %}>Пассажирские перевозки</option>
+        <option value="Логистика и экспедирование" {% if vacancy.direction == 'Логистика и экспедирование' %}selected{% endif %}>Логистика и экспедирование</option>
+        <option value="Водители грузового транспорта" {% if vacancy.direction == 'Водители грузового транспорта' %}selected{% endif %}>Водители грузового транспорта</option>
+        <option value="Водители пассажирского транспорта" {% if vacancy.direction == 'Водители пассажирского транспорта' %}selected{% endif %}>Водители пассажирского транспорта</option>
+        <option value="Такси и частные перевозки" {% if vacancy.direction == 'Такси и частные перевозки' %}selected{% endif %}>Такси и частные перевозки</option>
+        <option value="Диспетчерская служба" {% if vacancy.direction == 'Диспетчерская служба' %}selected{% endif %}>Диспетчерская служба</option>
+        <option value="Складская логистика" {% if vacancy.direction == 'Складская логистика' %}selected{% endif %}>Складская логистика</option>
+        <option value="Эксплуатация и ремонт транспорта" {% if vacancy.direction == 'Эксплуатация и ремонт транспорта' %}selected{% endif %}>Эксплуатация и ремонт транспорта</option>
+        <option value="Автосервис и обслуживание" {% if vacancy.direction == 'Автосервис и обслуживание' %}selected{% endif %}>Автосервис и обслуживание</option>
+        <option value="Управление автопарком" {% if vacancy.direction == 'Управление автопарком' %}selected{% endif %}>Управление автопарком</option>
+        <option value="Международные перевозки" {% if vacancy.direction == 'Международные перевозки' %}selected{% endif %}>Международные перевозки</option>
+        <option value="Курьерская доставка" {% if vacancy.direction == 'Курьерская доставка' %}selected{% endif %}>Курьерская доставка</option>
+        <option value="Перевозка опасных грузов" {% if vacancy.direction == 'Перевозка опасных грузов' %}selected{% endif %}>Перевозка опасных грузов</option>
+        <option value="Перевозка негабаритных грузов" {% if vacancy.direction == 'Перевозка негабаритных грузов' %}selected{% endif %}>Перевозка негабаритных грузов</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <label for="description" class="form-label">Описание</label>
+      <textarea id="description" name="description" rows="5" class="form-control" required>{{ vacancy.description }}</textarea>
+    </div>
+
+    <div class="col-12 mt-3">
+      <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

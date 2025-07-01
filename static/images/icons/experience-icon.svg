@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect x="20" y="25" width="60" height="50" rx="5" fill="#f0a500"/>
+  <rect x="25" y="30" width="50" height="40" rx="3" fill="#ffffff"/>
+  <rect x="30" y="35" width="40" height="6" rx="3" fill="#f0a500"/>
+  <rect x="30" y="45" width="35" height="4" rx="2" fill="#f0a500"/>
+  <rect x="30" y="52" width="30" height="4" rx="2" fill="#f0a500"/>
+  <rect x="30" y="59" width="25" height="4" rx="2" fill="#f0a500"/>
+  <circle cx="75" cy="35" r="8" fill="#f0a500"/>
+  <text x="75" y="39" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">EXP</text>
+</svg> 

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h1>РЕГИСТРАЦИЯ</h1>
+  
+  <form method="POST" action="{{ url_for('auth.register') }}">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control", placeholder="Введите имя пользователя") }}
+      {% for error in form.username.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.email.label(class="form-label") }}
+      {{ form.email(class="form-control", placeholder="Введите email") }}
+      {% for error in form.email.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control", placeholder="Введите пароль") }}
+      {% for error in form.password.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.confirm_password.label(class="form-label") }}
+      {{ form.confirm_password(class="form-control", placeholder="Повторите пароль") }}
+      {% for error in form.confirm_password.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.recaptcha() }}
+      {% for error in form.recaptcha.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group privacy-consent">
+      <div class="checkbox-wrapper">
+        {{ form.privacy_consent() }}
+        {{ form.privacy_consent.label(class="checkbox-label") }}
+      </div>
+      {% for error in form.privacy_consent.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+      <p class="consent-text">
+        Нажимая кнопку "Зарегистрироваться", вы соглашаетесь с 
+        <a href="{{ url_for('routes.privacy_policy') }}" target="_blank" style="color: var(--accent-color);">политикой конфиденциальности</a>
+      </p>
+    </div>
+
+    <div class="form-group">
+      {{ form.submit(class="btn") }}
+    </div>
+  </form>
+  
+  <!-- OAuth кнопки -->
+  {% include 'oauth_buttons.html' %}
+  
+  <div class="text-center mt-3">
+    <p>Уже есть аккаунт? <a href="{{ url_for('auth.login') }}" style="color: var(--accent-color); text-decoration: none;">Войти</a></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+Allow: /
+
+Sitemap: {{ url_for('static', filename='sitemap.xml', _external=True) }}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 800px;">
+  <h1>ЛИЧНЫЙ КАБИНЕТ</h1>
+  
+  <div class="card" style="margin-bottom: 30px;">
+    <h3 style="color: var(--accent-color); margin-bottom: 15px;">Информация о пользователе</h3>
+    <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Роль:</strong> {{ 'Соискатель' if user.role == 'candidate' else 'Работодатель' if user.role == 'employer' else 'Не выбрана' }}</p>
+    <form method="post" action="{{ url_for('routes.set_role') }}" style="margin-top: 20px;">
+      <label for="role">Выберите роль:</label>
+      <select name="role" id="role" class="form-control" style="max-width: 300px; display: inline-block; margin-left: 10px;">
+        <option value="candidate" {% if user.role == 'candidate' %}selected{% endif %}>Соискатель</option>
+        <option value="employer" {% if user.role == 'employer' %}selected{% endif %}>Работодатель</option>
+      </select>
+      <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Сохранить</button>
+    </form>
+  </div>
+
+  <div style="margin-bottom: 30px;">
+    <a href="{{ url_for('routes.add_resume') }}" class="btn" style="width: auto; display: inline-block; margin-right: 15px;">Добавить резюме</a>
+    <a href="{{ url_for('routes.my_vacancies') }}" class="btn btn-secondary" style="width: auto; display: inline-block;">Мои вакансии</a>
+  </div>
+
+  {% if resumes %}
+  <h2 style="color: var(--accent-color); margin-bottom: 20px;">МОИ РЕЗЮМЕ</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+    {% for resume in resumes %}
+    <div class="card">
+      <h4 style="color: var(--text-light); margin-bottom: 10px;">{{ resume.name }} {{ resume.surname }}</h4>
+      <p style="color: var(--text-light); margin-bottom: 15px; line-height: 1.5;">
+        {{ resume.description[:150] }}{% if resume.description|length > 150 %}...{% endif %}
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: space-between;">
+        <a href="{{ url_for('routes.edit_resume', id=resume.id) }}" class="btn btn-secondary" style="width: auto; flex: 1; margin-right: 10px;">Редактировать</a>
+        <form method="post" action="{{ url_for('routes.delete_resume', id=resume.id) }}" style="flex: 1;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <button type="submit" class="btn btn-danger" style="width: 100%;" onclick="return confirm('Вы точно хотите удалить резюме?');">Удалить</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card">
+    <p style="text-align: center; color: var(--text-light);">У вас пока нет резюме.</p>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="{{ url_for('routes.add_resume') }}" class="btn">Создать первое резюме</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

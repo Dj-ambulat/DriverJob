@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Тест цветов по времени — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 800px;">
+    <h1>🌅 Тест динамических цветов</h1>
+    
+    <div class="card" style="margin-bottom: 30px;">
+        <h3>Текущее время и цветовая схема</h3>
+        <div id="current-time-info" style="text-align: center; padding: 20px;">
+            <div id="time-display" style="font-size: 2rem; margin-bottom: 10px;">Загрузка...</div>
+            <div id="scheme-display" style="font-size: 1.2rem; color: var(--time-accent);">Загрузка схемы...</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3>Информация о цветах</h3>
+        <div id="color-info">
+            <div class="color-item">
+                <span class="color-label">Основной цвет:</span>
+                <span class="color-value" id="primary-color">#2b67f6</span>
+                <div class="color-preview" id="primary-preview"></div>
+            </div>
+            <div class="color-item">
+                <span class="color-label">Вторичный цвет:</span>
+                <span class="color-value" id="secondary-color">#32445a</span>
+                <div class="color-preview" id="secondary-preview"></div>
+            </div>
+            <div class="color-item">
+                <span class="color-label">Акцентный цвет:</span>
+                <span class="color-value" id="accent-color">#f0a500</span>
+                <div class="color-preview" id="accent-preview"></div>
+            </div>
+            <div class="color-item">
+                <span class="color-label">Цвет текста:</span>
+                <span class="color-value" id="text-color">#e0e0e0</span>
+                <div class="color-preview" id="text-preview"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.time-schemes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.scheme-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: var(--time-text);
+    backdrop-filter: blur(10px);
+}
+
+.scheme-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scheme-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scheme-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.scheme-time {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.color-info {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.color-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.color-label {
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.color-value {
+    font-family: monospace;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    min-width: 100px;
+}
+
+.color-preview {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+#current-time-info {
+    background: linear-gradient(135deg, var(--time-primary) 0%, var(--time-secondary) 100%);
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+#time-display {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#scheme-display {
+    color: var(--time-accent);
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    function updateTimeDisplay() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('ru-RU', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        
+        const timeDisplay = document.getElementById('time-display');
+        const schemeDisplay = document.getElementById('scheme-display');
+        
+        if (timeDisplay && schemeDisplay && window.timeBasedColors) {
+            timeDisplay.textContent = timeString;
+            const scheme = window.timeBasedColors.getCurrentScheme();
+            schemeDisplay.textContent = scheme.name;
+        }
+    }
+    
+    function updateColorInfo() {
+        if (!window.timeBasedColors) return;
+        
+        const scheme = window.timeBasedColors.getCurrentScheme();
+        
+        // Обновляем информацию о цветах
+        document.getElementById('primary-color').textContent = scheme.primary;
+        document.getElementById('secondary-color').textContent = scheme.secondary;
+        document.getElementById('accent-color').textContent = scheme.accent;
+        document.getElementById('text-color').textContent = scheme.text;
+        
+        // Обновляем превью цветов
+        document.getElementById('primary-preview').style.backgroundColor = scheme.primary;
+        document.getElementById('secondary-preview').style.backgroundColor = scheme.secondary;
+        document.getElementById('accent-preview').style.backgroundColor = scheme.accent;
+        document.getElementById('text-preview').style.backgroundColor = scheme.text;
+    }
+    
+    // Обновляем каждую секунду
+    setInterval(() => {
+        updateTimeDisplay();
+        updateColorInfo();
+    }, 1000);
+    
+    // Первоначальное обновление
+    updateTimeDisplay();
+    updateColorInfo();
+    
+    // Обновляем при смене схемы
+    if (window.timeBasedColors) {
+        const originalApplyColors = window.timeBasedColors.applyColors;
+        window.timeBasedColors.applyColors = function() {
+            originalApplyColors.call(this);
+            updateColorInfo();
+        };
+    }
+});
+</script>
+{% endblock %} 

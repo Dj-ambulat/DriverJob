@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить вакансию — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Добавить вакансию</h1>
+
+    <form method="post" class="row g-3">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="col-md-6">
+            <label for="title" class="form-label">Название вакансии</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Например: Водитель-дальнобойщик" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="city" class="form-label">Город</label>
+            <input type="text" id="city" name="city" class="form-control" placeholder="Грозный" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="experience" class="form-label">Требуемый опыт</label>
+            <input type="text" id="experience" name="experience" class="form-control" placeholder="3 года" required>
+        </div>
+
+        <div class="col-md-6">
+            <label for="direction" class="form-label">Направление</label>
+            <select id="direction" name="direction" class="form-select" required>
+                <option value="">Выберите направление</option>
+                <option value="Грузовые перевозки">Грузовые перевозки</option>
+                <option value="Пассажирские перевозки">Пассажирские перевозки</option>
+                <option value="Логистика и экспедирование">Логистика и экспедирование</option>
+                <option value="Водители грузового транспорта">Водители грузового транспорта</option>
+                <option value="Водители пассажирского транспорта">Водители пассажирского транспорта</option>
+                <option value="Такси и частные перевозки">Такси и частные перевозки</option>
+                <option value="Диспетчерская служба">Диспетчерская служба</option>
+                <option value="Складская логистика">Складская логистика</option>
+                <option value="Эксплуатация и ремонт транспорта">Эксплуатация и ремонт транспорта</option>
+                <option value="Автосервис и обслуживание">Автосервис и обслуживание</option>
+                <option value="Управление автопарком">Управление автопарком</option>
+                <option value="Международные перевозки">Международные перевозки</option>
+                <option value="Курьерская доставка">Курьерская доставка</option>
+                <option value="Перевозка опасных грузов">Перевозка опасных грузов</option>
+                <option value="Перевозка негабаритных грузов">Перевозка негабаритных грузов</option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label for="description" class="form-label">Описание</label>
+            <textarea id="description" name="description" class="form-control" rows="4" placeholder="Опишите условия, обязанности, график работы..." required></textarea>
+        </div>
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary">Опубликовать вакансию</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

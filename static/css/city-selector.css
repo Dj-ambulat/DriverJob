@@ -1,0 +1,325 @@
+/* Селектор городов */
+.city-selector {
+    position: relative;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.city-selector__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+.city-selector__input-wrapper:hover {
+    border-color: var(--time-primary);
+    box-shadow: 0 0 8px rgba(43, 103, 246, 0.2);
+}
+
+.city-selector__input-wrapper:focus-within {
+    border-color: var(--time-primary);
+    box-shadow: 0 0 12px rgba(43, 103, 246, 0.3);
+    transform: translateY(-1px);
+}
+
+.city-selector__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--time-text);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.city-selector__input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.city-selector__input--selected {
+    color: var(--time-primary);
+    font-weight: 600;
+}
+
+.city-selector__icon {
+    display: flex;
+    align-items: center;
+    margin-right: 6px;
+    color: var(--time-primary);
+    opacity: 0.8;
+}
+
+.city-selector__arrow {
+    display: flex;
+    align-items: center;
+    color: var(--time-text);
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+}
+
+.city-selector__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 20, 0.98);
+    border: 2px solid var(--time-primary);
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    backdrop-filter: blur(25px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(43, 103, 246, 0.3);
+    animation: cityDropdownSlide 0.3s ease;
+    display: block;
+}
+
+@keyframes cityDropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.city-selector__search-results {
+    padding: 6px 0;
+}
+
+.city-selector__item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.city-selector__item:hover {
+    background: rgba(43, 103, 246, 0.3);
+    transform: translateX(3px);
+    box-shadow: inset 0 0 10px rgba(43, 103, 246, 0.1);
+}
+
+.city-selector__item:last-child {
+    border-bottom: none;
+}
+
+.city-selector__item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--time-text);
+    margin-bottom: 2px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+.city-selector__item-region {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.city-selector__no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.city-selector__no-results-icon {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.city-selector__no-results-text {
+    font-size: 11px;
+}
+
+.city-selector__popular-cities {
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: block !important;
+}
+
+.city-selector__section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--time-accent);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.city-selector__popular-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 4px;
+}
+
+.city-selector__popular-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 4px 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.city-selector__popular-item:hover {
+    background: rgba(43, 103, 246, 0.2);
+    border-color: var(--time-primary);
+    transform: scale(1.01);
+}
+
+.city-selector__popular-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--time-text);
+}
+
+.city-selector__hidden-input {
+    display: none;
+}
+
+/* Скроллбар для выпадающего списка */
+.city-selector__dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.city-selector__dropdown::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.city-selector__dropdown::-webkit-scrollbar-thumb {
+    background: var(--time-primary);
+    border-radius: 3px;
+}
+
+.city-selector__dropdown::-webkit-scrollbar-thumb:hover {
+    background: rgba(43, 103, 246, 0.8);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .city-selector__input-wrapper {
+        padding: 10px 12px;
+    }
+    
+    .city-selector__input {
+        font-size: 14px;
+    }
+    
+    .city-selector__dropdown {
+        max-height: 300px;
+    }
+    
+    .city-selector__popular-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 6px;
+    }
+    
+    .city-selector__popular-item {
+        padding: 6px 8px;
+    }
+    
+    .city-selector__popular-name {
+        font-size: 12px;
+    }
+}
+
+/* Анимации для элементов */
+.city-selector__item,
+.city-selector__popular-item {
+    animation: cityItemFadeIn 0.3s ease;
+}
+
+@keyframes cityItemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Эффект пульсации для активного состояния */
+.city-selector__input-wrapper:focus-within {
+    animation: citySelectorPulse 2s infinite;
+}
+
+@keyframes citySelectorPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(43, 103, 246, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(43, 103, 246, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(43, 103, 246, 0.3);
+    }
+}
+
+/* Стили для множественного выбора (если понадобится) */
+.city-selector--multiple .city-selector__selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.city-selector__tag {
+    background: var(--time-primary);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.city-selector__tag-remove {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.city-selector__tag-remove:hover {
+    opacity: 1;
+}
+
+/* Дополнительные стили для принудительного отображения */
+.city-selector__dropdown.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 1000 !important;
+}
+
+.city-selector__dropdown.hide {
+    display: none !important;
+}
+
+/* Улучшенные стили для популярных городов */
+.city-selector__popular-cities {
+    padding: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: block !important;
+} 

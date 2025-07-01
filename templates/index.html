@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>ДОБРО ПОЖАЛОВАТЬ В ROAD FIGHTERS</h1>
+            <p>Лучшая платформа для поиска работы водителей</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('routes.vacancies') }}" class="btn btn-primary">Найти работу</a>
+                <a href="{{ url_for('routes.resumes') }}" class="btn btn-secondary">Найти водителя</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/content/hero-truck.jpg') }}" alt="Грузовик на дороге" class="hero-img">
+        </div>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <div class="feature-icon">
+            <img src="{{ url_for('static', filename='images/icons/driver-icon.svg') }}" alt="Иконка водителя">
+        </div>
+        <h3>Для водителей</h3>
+        <p>Создайте резюме и найдите подходящую работу</p>
+        <a href="{{ url_for('routes.create_resume') }}" class="btn">Создать резюме</a>
+    </div>
+    <div class="feature">
+        <div class="feature-icon">
+            <img src="{{ url_for('static', filename='images/icons/employer-icon.svg') }}" alt="Иконка работодателя">
+        </div>
+        <h3>Для работодателей</h3>
+        <p>Разместите вакансию и найдите надежного водителя</p>
+        <a href="{{ url_for('routes.add_vacancy') }}" class="btn">Разместить вакансию</a>
+    </div>
+</div>
+
+<div class="stats-section">
+    <div class="stat-item">
+        <img src="{{ url_for('static', filename='images/icons/vacancy-icon.svg') }}" alt="Вакансии">
+        <h3>{{ vacancies|length if vacancies else 0 }}</h3>
+        <p>Активных вакансий</p>
+    </div>
+    <div class="stat-item">
+        <img src="{{ url_for('static', filename='images/icons/resume-icon.svg') }}" alt="Резюме">
+        <h3>{{ resumes|length if resumes else 0 }}</h3>
+        <p>Резюме водителей</p>
+    </div>
+    <div class="stat-item">
+        <img src="{{ url_for('static', filename='images/icons/company-icon.svg') }}" alt="Компании">
+        <h3>{{ companies|length if companies else 0 }}</h3>
+        <p>Компаний-работодателей</p>
+    </div>
+</div>
+
+<div class="latest-vacancies">
+    <h2>Последние вакансии</h2>
+    {% if vacancies %}
+        <div class="vacancies-grid">
+            {% for vacancy in vacancies[:6] %}
+            <div class="vacancy-card">
+                <div class="vacancy-image">
+                    <img src="{{ url_for('static', filename='images/content/truck-work.jpg') }}" alt="Работа водителем">
+                </div>
+                <div class="vacancy-content">
+                    <h3>{{ vacancy.title }}</h3>
+                    <p class="vacancy-location">{{ vacancy.city or 'Город не указан' }}</p>
+                    <p class="vacancy-salary">{{ vacancy.salary_range }}</p>
+                    <p class="vacancy-description">{{ vacancy.description[:100] }}{% if vacancy.description|length > 100 %}...{% endif %}</p>
+                    <a href="{{ url_for('routes.vacancy_detail', id=vacancy.id) }}" class="btn btn-small">Подробнее</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="view-all">
+            <a href="{{ url_for('routes.vacancies') }}" class="btn">Посмотреть все вакансии</a>
+        </div>
+    {% else %}
+        <div class="no-vacancies">
+            <img src="{{ url_for('static', filename='images/content/no-vacancies.jpg') }}" alt="Нет вакансий">
+            <p>Пока нет вакансий. Будьте первым, кто разместит вакансию!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Дополнительные анимации для главной страницы
+document.addEventListener('DOMContentLoaded', function() {
+    // Проверяем, включены ли анимации
+    const animationsEnabled = localStorage.getItem('animationsEnabled') !== 'false';
+    
+    if (animationsEnabled) {
+    initPageAnimations();
+    } else {
+        // Если анимации отключены, сразу показываем все элементы
+        document.body.classList.add('page-loaded');
+        const elements = document.querySelectorAll('.hero-text, .hero-image, .features, .stats-section, .latest-vacancies');
+        elements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }
+});
+
+// Инициализация анимаций страницы
+function initPageAnimations() {
+    // Анимация при скролле
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+            }
+        });
+    }, observerOptions);
+    
+    // Наблюдаем за элементами с анимациями
+    const animatedElements = document.querySelectorAll('.feature, .stat-item, .vacancy-card');
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+    
+    // Анимация чисел в статистике
+    animateNumbers();
+    
+    // Анимация при наведении на карточки
+    initHoverAnimations();
+}
+
+// Анимация чисел в статистике
+function animateNumbers() {
+    const statNumbers = document.querySelectorAll('.stat-item h3');
+    
+    statNumbers.forEach(number => {
+        const finalValue = parseInt(number.textContent);
+        let currentValue = 0;
+        const increment = finalValue / 50; // 50 кадров анимации
+        
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= finalValue) {
+                currentValue = finalValue;
+                clearInterval(timer);
+            }
+            number.textContent = Math.floor(currentValue);
+        }, 50);
+    });
+}
+
+// Анимации при наведении
+function initHoverAnimations() {
+    // Анимация для кнопок
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.05)';
+        });
+        
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Анимация для карточек вакансий
+    const vacancyCards = document.querySelectorAll('.vacancy-card');
+    vacancyCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-8px) scale(1.02)';
+            this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+        });
+    });
+    
+    // Анимация для элементов статистики
+    const statItems = document.querySelectorAll('.stat-item');
+    statItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px) scale(1.05)';
+            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.4)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 0 20px var(--shadow-color)';
+        });
+    });
+}
+
+// Анимация при загрузке страницы
+window.addEventListener('load', function() {
+    // Добавляем класс для запуска анимаций
+    document.body.classList.add('page-loaded');
+    
+    // Проверяем, включены ли анимации
+    const animationsEnabled = localStorage.getItem('animationsEnabled') !== 'false';
+    
+    if (animationsEnabled) {
+    // Анимация появления элементов с задержкой
+    const elements = document.querySelectorAll('.hero-text, .hero-image, .features, .stats-section, .latest-vacancies');
+    elements.forEach((el, index) => {
+        setTimeout(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, index * 200);
+    });
+    } else {
+        // Если анимации отключены, сразу показываем все элементы
+        const elements = document.querySelectorAll('.hero-text, .hero-image, .features, .stats-section, .latest-vacancies');
+        elements.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }
+});
+</script>
+{% endblock %}

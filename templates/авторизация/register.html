@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация | RoadFighters{% endblock %}
+
+{% block content %}
+<div class="container py-4 d-flex justify-content-center">
+  <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'danger' else 'success' if category == 'success' else 'info' }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h2 class="mb-4 text-center">Регистрация</h2>
+    <form method="POST" action="{{ url_for('auth.register') }}">
+        {{ form.hidden_tag() }}
+
+        <div>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div>
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=32) }}<br>
+            {% for error in form.confirm_password.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group mb-3">
+            {{ form.role.label }}
+            {{ form.role(class="form-control") }}
+            {% for error in form.role.errors %}
+            <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group mb-3">
+            {{ form.recaptcha() }}
+            {% for error in form.recaptcha.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        {{ form.submit() }}
+    </form>
+    </div>
+{% endblock %}

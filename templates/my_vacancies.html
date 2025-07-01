@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Мои вакансии — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 800px;">
+  <h1>МОИ ВАКАНСИИ</h1>
+  
+  <div style="margin-bottom: 30px;">
+    <a href="{{ url_for('routes.add_vacancy') }}" class="btn" style="width: auto; display: inline-block;">Добавить вакансию</a>
+  </div>
+
+  {% if vacancies %}
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+    {% for vacancy in vacancies %}
+    <div class="card">
+      <h4 style="color: var(--accent-color); margin-bottom: 10px;">{{ vacancy.title }}</h4>
+      <p style="color: var(--text-light); margin-bottom: 10px;"><strong>Город:</strong> {{ vacancy.city }}</p>
+      <p style="color: var(--text-light); margin-bottom: 10px;"><strong>Опыт:</strong> {{ vacancy.experience }}</p>
+      <p style="color: var(--text-light); margin-bottom: 15px; line-height: 1.5;">
+        {{ vacancy.description[:150] }}{% if vacancy.description|length > 150 %}...{% endif %}
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: space-between;">
+        <a href="{{ url_for('routes.edit_vacancy', id=vacancy.id) }}" class="btn btn-secondary" style="width: auto; flex: 1; margin-right: 10px;">Редактировать</a>
+        <form method="post" action="{{ url_for('routes.delete_vacancy', id=vacancy.id) }}" style="flex: 1;">
+          {{ csrf_token() }}
+          <button type="submit" class="btn btn-danger" style="width: 100%;" onclick="return confirm('Удалить вакансию?');">Удалить</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="card">
+    <p style="text-align: center; color: var(--text-light);">У вас пока нет вакансий.</p>
+    <div style="text-align: center; margin-top: 15px;">
+      <a href="{{ url_for('routes.add_vacancy') }}" class="btn">Создать первую вакансию</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

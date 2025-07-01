@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест изображений - Road Fighters</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+        .test-image {
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid #2b67f6;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .test-image img {
+            max-width: 100px;
+            height: auto;
+        }
+        .error {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .success {
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Тест изображений Road Fighters</h1>
+        
+        <div class="test-section">
+            <h2>📁 Проверка иконок</h2>
+            
+            <div class="test-image">
+                <h3>Водитель</h3>
+                <img src="{{ url_for('static', filename='images/icons/driver-icon.svg') }}" 
+                     alt="Иконка водителя" 
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Работодатель</h3>
+                <img src="{{ url_for('static', filename='images/icons/employer-icon.svg') }}" 
+                     alt="Иконка работодателя"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Вакансия</h3>
+                <img src="{{ url_for('static', filename='images/icons/vacancy-icon.svg') }}" 
+                     alt="Иконка вакансии"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Резюме</h3>
+                <img src="{{ url_for('static', filename='images/icons/resume-icon.svg') }}" 
+                     alt="Иконка резюме"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Компания</h3>
+                <img src="{{ url_for('static', filename='images/icons/company-icon.svg') }}" 
+                     alt="Иконка компании"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 Проверка дополнительных иконок</h2>
+            
+            <div class="test-image">
+                <h3>Поиск</h3>
+                <img src="{{ url_for('static', filename='images/icons/search-icon.svg') }}" 
+                     alt="Иконка поиска"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Местоположение</h3>
+                <img src="{{ url_for('static', filename='images/icons/location-icon.svg') }}" 
+                     alt="Иконка местоположения"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Опыт</h3>
+                <img src="{{ url_for('static', filename='images/icons/experience-icon.svg') }}" 
+                     alt="Иконка опыта"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+            
+            <div class="test-image">
+                <h3>Направление</h3>
+                <img src="{{ url_for('static', filename='images/icons/direction-icon.svg') }}" 
+                     alt="Иконка направления"
+                     onerror="this.parentElement.innerHTML += '<div class=error>❌ Ошибка загрузки</div>'"
+                     onload="this.parentElement.innerHTML += '<div class=success>✅ Загружено</div>'">
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📄 Проверка папки content</h2>
+            <p>Тестовый файл: <a href="{{ url_for('static', filename='images/content/test-image.txt') }}" target="_blank">test-image.txt</a></p>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔗 Ссылки для проверки</h2>
+            <ul>
+                <li><a href="{{ url_for('routes.index') }}">Главная страница</a></li>
+                <li><a href="{{ url_for('routes.vacancies') }}">Страница вакансий</a></li>
+                <li><a href="{{ url_for('static', filename='images/icons/driver-icon.svg') }}" target="_blank">Прямая ссылка на иконку водителя</a></li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h2>💡 Инструкции по обновлению</h2>
+            <ol>
+                <li><strong>Принудительное обновление:</strong> Нажмите Ctrl+F5</li>
+                <li><strong>Очистка кеша:</strong> F12 → Network → Disable cache</li>
+                <li><strong>Режим инкогнито:</strong> Откройте сайт в режиме инкогнито</li>
+                <li><strong>Перезапуск сервера:</strong> Остановите и запустите заново python run.py</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html> 

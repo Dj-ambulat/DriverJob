@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Мои резюме</h2>
+
+  {% if resumes %}
+<ul>
+    {% for resume in resumes %}
+    <li>
+        {{ resume.name }} {{ resume.surname }} - {{ resume.position or 'Позиция не указана' }}
+        <a href="{{ url_for('routes.download_resume', resume_id=resume.id) }}">Скачать резюме</a>
+        <a href="{{ url_for('routes.edit_resume', id=resume.id) }}">Редактировать</a>
+    </li>
+    {% endfor %}
+</ul>
+  {% else %}
+<p>У вас пока нет резюме.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Личный кабинет работодателя{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Личный кабинет работодателя</h1>
+    <p>Добро пожаловать, {{ user.username }}!</p>
+
+    <div class="mb-3">
+        <a href="{{ url_for('routes.add_vacancy') }}" class="btn btn-success">Добавить вакансию</a>
+        <a href="{{ url_for('routes.my_vacancies') }}" class="btn btn-secondary">Мои вакансии</a>
+    </div>
+
+    {% if vacancies %}
+        <div class="row">
+            {% for vacancy in vacancies %}
+                <div class="col-md-6 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ vacancy.title }}</h5>
+                            <p>{{ vacancy.description }}</p>
+                            <a href="{{ url_for('routes.edit_vacancy', id=vacancy.id) }}" class="btn btn-primary btn-sm">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>У вас пока нет вакансий.</p>
+    {% endif %}
+</div>
+{% endblock %}

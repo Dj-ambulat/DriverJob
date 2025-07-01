@@ -1,0 +1,27 @@
+# Пример файла переменных окружения
+# Скопируйте этот файл в .env и заполните реальными значениями
+
+# Безопасность
+SECRET_KEY=your_super_secret_key_here_change_in_production
+
+# База данных
+DATABASE_URL=sqlite:///jobportal.db
+
+# Настройки почты
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USE_TLS=true
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
+
+# Настройки приложения
+FLASK_ENV=development
+UPLOAD_FOLDER=uploads
+SITE_URL=http://localhost:5000
+
+# Настройки безопасности для продакшена
+SESSION_COOKIE_SECURE=false
+
+# Google reCAPTCHA
+RECAPTCHA_PUBLIC_KEY=your_site_key_here
+RECAPTCHA_PRIVATE_KEY=your_secret_key_here 

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Подробности резюме — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 600px;">
+  <h1 style="color: var(--accent-color); margin-bottom: 30px; text-align: center;">ПОДРОБНОСТИ РЕЗЮМЕ</h1>
+
+  <div class="card">
+    {% if resume.photo_filename %}
+      <img src="{{ url_for('static', filename='uploads/' + resume.photo_filename) }}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;" alt="Фото кандидата">
+    {% endif %}
+    
+    <div style="padding: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Имя:</strong>
+          <span style="color: var(--text-light);">{{ resume.name }} {{ resume.surname }}</span>
+        </div>
+        
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Город:</strong>
+          <span style="color: var(--text-light);">{{ resume.city }}</span>
+        </div>
+        
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Опыт:</strong>
+          <span style="color: var(--text-light);">{{ resume.experience }}</span>
+        </div>
+        
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Категория:</strong>
+          <span style="color: var(--text-light);">{{ resume.position }}</span>
+        </div>
+        
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Контакты:</strong>
+          <span style="color: var(--text-light);">{{ resume.contact }}</span>
+        </div>
+        
+        {% if resume.description %}
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; background: rgba(255, 255, 255, 0.05);">
+          <strong style="color: var(--accent-color);">Описание:</strong>
+          <p style="color: var(--text-light); margin-top: 10px; line-height: 1.6;">{{ resume.description }}</p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ url_for('routes.resumes') }}" class="btn btn-secondary" style="width: auto; display: inline-block;">← Назад к списку резюме</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

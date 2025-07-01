@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Доступ запрещен — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 600px;">
+  <div style="text-align: center;">
+    <h1 style="color: var(--accent-color); font-size: 4rem; margin-bottom: 20px;">403</h1>
+    <h2 style="color: var(--accent-color); margin-bottom: 30px;">ДОСТУП ЗАПРЕЩЕН</h2>
+    
+    <div class="card">
+      <p style="color: var(--text-light); margin-bottom: 20px; line-height: 1.6;">
+        У вас нет прав для доступа к этой странице.
+      </p>
+      
+      <p style="color: var(--text-light); margin-bottom: 30px; line-height: 1.6;">
+        Возможно, вам нужно войти в систему или у вас недостаточно прав.
+      </p>
+      
+      <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('routes.index') }}" class="btn" style="width: auto; display: inline-block;">
+          На главную
+        </a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-secondary" style="width: auto; display: inline-block;">
+          Войти в систему
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

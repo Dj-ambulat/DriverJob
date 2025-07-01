@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title or 'Вакансия' }} — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h1>{{ title or 'СОЗДАТЬ ВАКАНСИЮ' }}</h1>
+  
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+      {{ form.title.label(class="form-label") }}
+      {{ form.title(class="form-control", placeholder="Введите название вакансии") }}
+      {% for error in form.title.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.city.label(class="form-label") }}
+      {{ form.city(class="form-control", placeholder="Введите город") }}
+      {% for error in form.city.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.experience.label(class="form-label") }}
+      {{ form.experience(class="form-control", placeholder="Требуемый опыт работы") }}
+      {% for error in form.experience.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.direction.label(class="form-label") }}
+      <select name="direction" id="direction" class="form-control" required>
+        <option value="">Выберите направление</option>
+        <option value="Грузовые перевозки">Грузовые перевозки</option>
+        <option value="Пассажирские перевозки">Пассажирские перевозки</option>
+        <option value="Логистика и экспедирование">Логистика и экспедирование</option>
+        <option value="Водители грузового транспорта">Водители грузового транспорта</option>
+        <option value="Водители пассажирского транспорта">Водители пассажирского транспорта</option>
+        <option value="Такси и частные перевозки">Такси и частные перевозки</option>
+        <option value="Диспетчерская служба">Диспетчерская служба</option>
+        <option value="Складская логистика">Складская логистика</option>
+        <option value="Эксплуатация и ремонт транспорта">Эксплуатация и ремонт транспорта</option>
+        <option value="Автосервис и обслуживание">Автосервис и обслуживание</option>
+        <option value="Управление автопарком">Управление автопарком</option>
+        <option value="Международные перевозки">Международные перевозки</option>
+        <option value="Курьерская доставка">Курьерская доставка</option>
+        <option value="Перевозка опасных грузов">Перевозка опасных грузов</option>
+        <option value="Перевозка негабаритных грузов">Перевозка негабаритных грузов</option>
+      </select>
+      {% for error in form.direction.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.description.label(class="form-label") }}
+      {{ form.description(class="form-control", rows="5", placeholder="Подробное описание вакансии, требования, обязанности...") }}
+      {% for error in form.description.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.salary_from.label(class="form-label") }}
+      {{ form.salary_from(class="form-control", placeholder="Зарплата от (руб.)") }}
+      {% for error in form.salary_from.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.salary_to.label(class="form-label") }}
+      {{ form.salary_to(class="form-control", placeholder="Зарплата до (руб.)") }}
+      {% for error in form.salary_to.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.submit(class="btn") }}
+    </div>
+  </form>
+  
+  <div class="text-center mt-3">
+    <a href="{{ url_for('routes.my_vacancies') }}" class="btn btn-secondary" style="width: auto; display: inline-block; margin-right: 10px;">Мои вакансии</a>
+    <a href="{{ url_for('routes.index') }}" class="btn btn-secondary" style="width: auto; display: inline-block;">На главную</a>
+  </div>
+</div>
+{% endblock %}

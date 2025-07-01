@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Резюме — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 1200px;">
+  <h1>СПИСОК РЕЗЮМЕ</h1>
+
+  {% if resumes %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+      {% for resume in resumes %}
+        <div class="card">
+          {% if resume.photo_filename %}
+            <img src="{{ url_for('static', filename='uploads/' + resume.photo_filename) }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;" alt="Фото кандидата">
+          {% endif %}
+          <div style="padding: 20px;">
+            <h4 style="color: var(--accent-color); margin-bottom: 15px;">{{ resume.name }} {{ resume.surname }}</h4>
+            <p style="color: var(--text-light); margin-bottom: 8px;"><strong>Город:</strong> {{ resume.city or 'Не указан' }}</p>
+            <p style="color: var(--text-light); margin-bottom: 8px;"><strong>Опыт:</strong> {{ resume.experience or 'Не указан' }}</p>
+            <p style="color: var(--text-light); margin-bottom: 8px;"><strong>Позиция:</strong> {{ resume.position or 'Не указана' }}</p>
+            <p style="color: var(--text-light); margin-bottom: 15px;"><strong>Контакты:</strong> {{ resume.contact or resume.phone_number or 'Не указаны' }}</p>
+            <a href="{{ url_for('routes.resume_detail', id=resume.id) }}" class="btn" style="width: 100%;">Подробнее</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    <div style="margin-top: 40px; text-align: center;">
+      <div style="display: inline-flex; gap: 10px; align-items: center;">
+        {% set args = request.args.to_dict() %}
+        {% if page > 1 %}
+          {% set args = args.copy() %}
+          {% set _ = args.update({'page': page - 1}) %}
+          <a href="{{ url_for('routes.resumes') }}?{{ args | urlencode }}" class="btn btn-secondary" style="width: auto;">← Предыдущая</a>
+        {% else %}
+          <button class="btn btn-secondary" style="width: auto;" disabled>← Предыдущая</button>
+        {% endif %}
+        
+        <span style="color: var(--text-light); padding: 0 15px;">Страница {{ page }} из {{ total_pages }}</span>
+        
+        {% if page < total_pages %}
+          {% set args = args.copy() %}
+          {% set _ = args.update({'page': page + 1}) %}
+          <a href="{{ url_for('routes.resumes') }}?{{ args | urlencode }}" class="btn btn-secondary" style="width: auto;">Следующая →</a>
+        {% else %}
+          <button class="btn btn-secondary" style="width: auto;" disabled>Следующая →</button>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="card">
+      <p style="text-align: center; color: var(--text-light);">Резюме не найдены.</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

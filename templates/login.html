@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <h1>ВХОД В СИСТЕМУ</h1>
+  
+  <form method="POST" action="{{ url_for('auth.login') }}">
+    {{ form.hidden_tag() }}
+    
+    <div class="form-group">
+      {{ form.email.label(class="form-label") }}
+      {{ form.email(class="form-control", placeholder="Введите email") }}
+      {% for error in form.email.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control", placeholder="Введите пароль") }}
+      {% for error in form.password.errors %}
+        <div class="error-message">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
+      {{ form.submit(class="btn") }}
+    </div>
+  </form>
+  
+  <!-- OAuth кнопки -->
+  {% include 'oauth_buttons.html' %}
+  
+  <div class="text-center mt-3">
+    <p>Нет аккаунта? <a href="{{ url_for('auth.register') }}" style="color: var(--accent-color); text-decoration: none;">Зарегистрироваться</a></p>
+    <p><a href="{{ url_for('auth.reset_password_request') }}" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">Забыли пароль?</a></p>
+  </div>
+</div>
+{% endblock %} 

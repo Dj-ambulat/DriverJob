@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Вакансия: {{ vacancy.title }} — Road Fighters{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-3">{{ vacancy.title }}</h2>
+
+  <p><strong>Город:</strong> {{ vacancy.city }}</p>
+  <p><strong>Опыт:</strong> {{ vacancy.experience }}</p>
+  <p><strong>Направление:</strong> {{ vacancy.direction }}</p>
+  <p><strong>Описание:</strong> {{ vacancy.description }}</p>
+
+  <hr>
+
+  <form method="post" class="mt-4">
+    {{ csrf_token() }}  {# CSRF-токен обязательно #}
+    
+    <div class="mb-3">
+      <label for="message" class="form-label">Ваш отклик:</label>
+      <textarea id="message" name="message" class="form-control" rows="4" placeholder="Напишите сообщение..." required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Отправить отклик</button>
+  </form>
+
+  {% if responses %}
+    <hr>
+    <h4 class="mt-4">Отклики:</h4>
+    <ul class="list-group">
+      {% for message, username, date in responses %}
+        <li class="list-group-item">
+          <strong>{{ username }}</strong> ({{ date.strftime('%d.%m.%Y %H:%M') }}):<br>
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

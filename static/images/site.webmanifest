@@ -1,0 +1,21 @@
+{
+  "name": "Road Fighters",
+  "short_name": "RoadFighters",
+  "description": "Платформа для поиска работы водителей",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff6b35",
+  "icons": [
+    {
+      "src": "/static/images/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

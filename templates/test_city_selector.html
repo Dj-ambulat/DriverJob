@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Тест селектора городов{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 50px auto; padding: 20px;">
+    <h1>Тест селектора городов</h1>
+    
+    <div style="margin: 20px 0;">
+        <label for="city-selector">Выберите город:</label>
+        <div id="city-selector" data-city-selector="city-selector"></div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h3>Отладочная информация:</h3>
+        <div id="debug-info" style="background: rgba(0,0,0,0.1); padding: 10px; border-radius: 5px;">
+            <p>Статус: <span id="status">Ожидание...</span></p>
+            <p>Выбранный город: <span id="selected-city">Не выбран</span></p>
+        </div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <button onclick="testSelector()" style="padding: 10px 20px; background: #2b67f6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Тестировать селектор
+        </button>
+        <button onclick="clearSelector()" style="padding: 10px 20px; background: #666; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+            Очистить
+        </button>
+    </div>
+</div>
+
+<script>
+let citySelector;
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Инициализация селектора городов...');
+    
+    citySelector = new CitySelector('city-selector', {
+        placeholder: 'Выберите город для тестирования...',
+        showPopular: true,
+        maxResults: 10
+    });
+    
+    // Обработчик выбора города
+    citySelector.container.addEventListener('citySelected', function(e) {
+        console.log('Выбран город:', e.detail);
+        document.getElementById('selected-city').textContent = e.detail.cityName;
+        document.getElementById('status').textContent = 'Город выбран!';
+    });
+    
+    document.getElementById('status').textContent = 'Селектор инициализирован';
+});
+
+function testSelector() {
+    console.log('Тестируем селектор...');
+    console.log('Состояние селектора:', citySelector);
+    console.log('Выпадающий список:', citySelector.dropdown);
+    console.log('Стили выпадающего списка:', window.getComputedStyle(citySelector.dropdown));
+    
+    // Принудительно показываем список
+    citySelector.showDropdown();
+    
+    document.getElementById('status').textContent = 'Тест выполнен - проверьте консоль';
+}
+
+function clearSelector() {
+    if (citySelector) {
+        citySelector.clear();
+        document.getElementById('selected-city').textContent = 'Не выбран';
+        document.getElementById('status').textContent = 'Селектор очищен';
+    }
+}
+</script>
+{% endblock %} 
