@@ -86,6 +86,30 @@ def yandex_callback():
         flash('Ошибка авторизации через Яндекс', 'error')
         return redirect(url_for('auth.login'))
 
+@routes_bp.route('/auth/vkid/callback', methods=['POST'])
+def vkid_callback():
+    """Callback для VK ID"""
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data received'}), 400
+        
+        # Получаем код авторизации
+        code = data.get('code')
+        device_id = data.get('device_id')
+        
+        if not code or not device_id:
+            return jsonify({'error': 'Missing code or device_id'}), 400
+        
+        # Пока что просто возвращаем успех
+        # TODO: Реализовать обмен кода на токен и получение данных пользователя
+        flash('VK ID авторизация успешна!', 'success')
+        return jsonify({'success': True})
+        
+    except Exception as e:
+        current_app.logger.error(f"Ошибка VK ID callback: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
 @routes_bp.route('/test-images')
 def test_images():
     """Тестовая страница для проверки изображений"""

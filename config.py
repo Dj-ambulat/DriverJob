@@ -33,8 +33,8 @@ class Config:
     YANDEX_CLIENT_SECRET = os.environ.get('YANDEX_CLIENT_SECRET')
     
     # Google reCAPTCHA
-    RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY', 'your-public-key')
-    RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY', 'your-secret-key')
+    RECAPTCHA_PUBLIC_KEY = '6LcQI3QrAAAAANxSmCpcSvDYrsjJqrNugK1odqgY'
+    RECAPTCHA_PRIVATE_KEY = '6LcQI3QrAAAAACKb6YYpXvnMtwJfC3FEZzNdj3UA'
     
     # Настройки для продакшена
     if os.environ.get('FLASK_ENV') == 'production':
@@ -43,7 +43,7 @@ class Config:
         # В продакшене обязательно должны быть установлены переменные окружения
         if not os.environ.get('SECRET_KEY'):
             raise ValueError("SECRET_KEY должен быть установлен в продакшене!")
-        if not os.environ.get('MAIL_USERNAME') or not os.environ.get('MAIL_PASSWORD'):
+        if not os.environ.get('jambulat.shuaipov@yandex.ru') or not os.environ.get('vmxcubdssqnqioys'):
             print("ВНИМАНИЕ: Настройки почты не установлены!")
     else:
         debug = True

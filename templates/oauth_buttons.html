@@ -34,11 +34,33 @@
       });
     
       function vkidOnSuccess(data) {
-        // Обработка полученного результата
+        // Отправляем данные на сервер
+        fetch('/auth/vkid/callback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                code: data.code,
+                device_id: data.device_id
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                window.location.reload();
+            } else {
+                console.log('Ошибка авторизации:', result.error);
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+        });
       }
     
       function vkidOnError(error) {
-        // Обработка ошибки
+        // Тихо логируем ошибку без показа пользователю
+        console.log('VK ID ошибка (игнорируется):', error);
       }
     }
   </script>
